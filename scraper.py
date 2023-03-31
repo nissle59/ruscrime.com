@@ -247,9 +247,9 @@ def parse_article(url):
                 'ext': ext,
                 'b_data': b_data
             }
-            print(f'{ext} : {url}')
+            #print(f'{ext} : {url}')
         except Exception as e:
-            _log.info(f'[FAILED Title Image] {img_src} can\'t load for {url}')
+            #_log.info(f'[FAILED Title Image] {img_src} can\'t load for {url}')
             img = None
 
 
