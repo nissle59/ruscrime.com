@@ -232,7 +232,7 @@ def parse_article(url):
         except:
             date = None
         title = full.select_one('h1.jeg_post_title').text.strip()
-
+        img_src = ''
         try:
             img_src = full.select_one('div.featured_image>img')['data-src']
             if img_src[0] == '/':
@@ -247,7 +247,8 @@ def parse_article(url):
                 'ext': ext,
                 'b_data': b_data
             }
-        except:
+        except Exception as e:
+            _log.info(f'[FAILED Title Image] {img_src} can\'t load for {url}')
             img = None
 
 
