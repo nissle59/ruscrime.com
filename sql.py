@@ -167,22 +167,22 @@ def sql_set_link_flags(link,downloaded = False, uploaded = False):
 def sql_check_links_integrity():
     _log = logging.getLogger('parser.sql.get_links')
     _log.info(f'Start check links integrity')
-    select_query = "SELECT * FROM links WHERE link LIKE %s"
+    select_query = "SELECT link FROM links WHERE link LIKE %s"
     try:
         sql_cur.execute(select_query, (config.base_url + "%",))
-        total_links = sql_cur.fetchall()
+        total_links = [link['link'] for link in sql_cur.fetchall()]
     except:
         sql_conn.rollback()
         sql_cur.execute(select_query, (config.base_url + "%",))
-        total_links = sql_cur.fetchall()
-    select_query = "SELECT * FROM articles WHERE source LIKE %s"
+        total_links = [link['link'] for link in sql_cur.fetchall()]
+    select_query = "SELECT source FROM articles WHERE source LIKE %s"
     try:
         sql_cur.execute(select_query, (config.base_url + "%",))
-        total_articles = sql_cur.fetchall()
+        total_articles = [link['source'] for link in sql_cur.fetchall()]
     except:
         sql_conn.rollback()
         sql_cur.execute(select_query, (config.base_url + "%",))
-        total_articles = sql_cur.fetchall()
+        total_articles = [link['source'] for link in sql_cur.fetchall()]
     c = 0
     for link in total_links:
         if link not in total_articles:
