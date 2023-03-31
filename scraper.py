@@ -265,7 +265,7 @@ def parse_article(url):
             post = full.select_one('div.content-inner')
 
         try:
-            tags = [a.text.strip() for a in full.select('div.jeg_post_tags>a')]
+            tags = [a.text.strip(' #') for a in full.select('div.jeg_post_tags>a')]
         except:
             tags = None
 
