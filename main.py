@@ -55,11 +55,13 @@ if __name__ == '__main__':
     init_db(SSH_TUNNELED)
     sql_version()
     sql_dups_delete()
+    sql_dups_delete('links','link')
     if not DEV:
         config.last_date = sql_get_last_link_date()
         for dep in config.deps:
             log.info(f'Go to {dep}')
             get_articles_links(dep)
+    sql_dups_delete('links', 'link')
     links = sql_get_links()
     if links:
         if MULTITHREADED:
@@ -70,4 +72,5 @@ if __name__ == '__main__':
         log.info('No articles to parse')
     # Here will be uploader
     sql_dups_delete()
+    sql_dups_delete('links', 'link')
     close_db(SSH_TUNNELED)

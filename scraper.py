@@ -278,7 +278,6 @@ def parse_article(url):
 
     if d:
         if sql_add_article(d):
-            config.CURRENT_LINK += 1
             if img:
                 sql_add_image(img)
             _log.info(
@@ -293,15 +292,9 @@ def parse_articles(links: dict):
     _log = logging.getLogger('parser.parse_articles')
     urls = [link['link'] for link in links]
     for url in urls:
-        d = parse_article(url)
-        # if d:
-        #     if sql_add_article(d):
-        #         config.CURRENT_LINK += 1
-        #         _log.info(f'[{round(config.CURRENT_LINK / config.TOTAL_LINKS * 100, 2)}%] {config.CURRENT_LINK} of {config.TOTAL_LINKS} -=- {url} parsed and added')
-        #     else:
-        #         _log.info(f'{url} parsed, NOT added')
-        # else:
-        #     _log.info(f'{url} FAILED')
+        config.CURRENT_LINK += 1
+        parse_article(url)
+
 
 
 def multithreaded_parse_articles(links: dict):
