@@ -56,6 +56,7 @@ if __name__ == '__main__':
     sql_version()
     sql_dups_delete()
     sql_dups_delete('links','link')
+    sql_check_links_integrity()
     if not DEV:
         config.last_date = sql_get_last_link_date()
         for dep in config.deps:
@@ -74,4 +75,5 @@ if __name__ == '__main__':
     # Here will be uploader
     sql_dups_delete()
     sql_dups_delete('links', 'link')
+    sql_check_links_integrity()
     close_db(SSH_TUNNELED)

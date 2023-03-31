@@ -151,6 +151,46 @@ def sql_get_links():
         return None
 
 
+def sql_set_link_flags(link,downloaded = False, uploaded = False):
+    _log = logging.getLogger('parser.sql.sql_set_link_flags')
+    try:
+        q = "UPDATE links SET downloaded = %s, uploaded = %s WHERE link = %s"
+        sql_cur.execute(q,(downloaded,uploaded,link))
+        sql_conn.commit()
+        return True
+    except Exception as e:
+        _log.error(e)
+        sql_conn.rollback()
+        return False
+
+
+def sql_check_links_integrity():
+    _log = logging.getLogger('parser.sql.get_links')
+    _log.info(f'Start check links integrity')
+    select_query = "SELECT * FROM links WHERE link LIKE %s"
+    try:
+        sql_cur.execute(select_query, (config.base_url + "%",))
+        total_links = sql_cur.fetchall()
+    except:
+        sql_conn.rollback()
+        sql_cur.execute(select_query, (config.base_url + "%",))
+        total_links = sql_cur.fetchall()
+    select_query = "SELECT * FROM articles WHERE source LIKE %s"
+    try:
+        sql_cur.execute(select_query, (config.base_url + "%",))
+        total_articles = sql_cur.fetchall()
+    except:
+        sql_conn.rollback()
+        sql_cur.execute(select_query, (config.base_url + "%",))
+        total_articles = sql_cur.fetchall()
+    c = 0
+    for link in total_links:
+        if link not in total_articles:
+            c += 1
+            sql_set_link_flags(link,downloaded=False)
+    _log.info(f'Fixed {c} issues')
+
+
 def sql_set_link_downloaded(link):
     _log = logging.getLogger('parser.sql.set_link_downloaded')
     try:
