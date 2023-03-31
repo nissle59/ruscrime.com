@@ -92,7 +92,7 @@ def get_articles_links(dep_link = 'ministers/'):
     total_pages = int(a_s[-1:][0].text.strip())
     _log.info(f'Total pages: {total_pages}')
     _log.info(f'Found last date in DB: {last_date}')
-    for current_page in trange(total_pages, 1, desc='Loading links...'):
+    for current_page in trange(total_pages, -1, -1, desc='Loading links...'):
         d = {}
         page_url = init_url + f'page/{current_page}/'
         resp = GET(page_url)
