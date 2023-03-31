@@ -234,7 +234,7 @@ def parse_article(url):
         title = full.select_one('h1.jeg_post_title').text.strip()
         img_src = ''
         try:
-            img_src = full.select_one('div.featured_image>img')['data-src']
+            img_src = full.select_one('div.featured_image>a')['href']
             if img_src[0] == '/':
                 img_src = base_url[:-1] + img_src
             b_data = GET(img_src.replace(' ','')).content
@@ -247,6 +247,7 @@ def parse_article(url):
                 'ext': ext,
                 'b_data': b_data
             }
+            print(f'{ext} : {url}')
         except Exception as e:
             _log.info(f'[FAILED Title Image] {img_src} can\'t load for {url}')
             img = None
@@ -289,13 +290,18 @@ def parse_article(url):
     if d:
         if sql_add_article(d):
             if img:
-                sql_add_image(img)
-            _log.info(
-                f'[{round(config.CURRENT_LINK / config.TOTAL_LINKS * 100, 2)}%] {config.CURRENT_LINK} of {config.TOTAL_LINKS} -=- {url} parsed and added')
+                if sql_add_image(img):
+                    _log.info(
+                        f'[{round(config.CURRENT_LINK / config.TOTAL_LINKS * 100, 2)}%] [SUCCESS] {config.CURRENT_LINK} of {config.TOTAL_LINKS} -=- {url} parsed and added')
+                else:
+                    _log.info(f'[{round(config.CURRENT_LINK / config.TOTAL_LINKS * 100, 2)}%] [FAIL] {config.CURRENT_LINK} of {config.TOTAL_LINKS} -=- {url} can\'t load title_img')
+            else:
+                _log.info(
+                    f'[{round(config.CURRENT_LINK / config.TOTAL_LINKS * 100, 2)}%] [NORMAL] {config.CURRENT_LINK} of {config.TOTAL_LINKS} -=- {url} no title_img')
         else:
             _log.info(f'{url} parsed, NOT added')
     else:
-        _log.info(f'{url} FAILED')
+        _log.info(f'[{round(config.CURRENT_LINK / config.TOTAL_LINKS * 100, 2)}%] [FAIL] {config.CURRENT_LINK} of {config.TOTAL_LINKS} -=- {url} FAILED')
 
 
 def parse_articles(links: dict):
