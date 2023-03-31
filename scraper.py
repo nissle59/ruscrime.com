@@ -122,11 +122,12 @@ def get_articles_links(dep_link = 'ministers/'):
                         'link': link
                     }
                     #print((d['name'],d['link'],d['date']))
+                    sql_push_link(d)
                     arr.append(d)
                     links.append(d)
                 except Exception as e:
                     _log.error(e)
-            sql_push_links(arr)
+            #sql_push_links(arr)
             arr.clear()
         else:
             _log.error(f'[{page_url}] FAILED!')
