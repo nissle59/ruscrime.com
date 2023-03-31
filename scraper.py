@@ -140,7 +140,7 @@ def clear_page(post) -> str:
                 img_src = 'https:' + img['src']
             elif img_src[0] == '/':
                 img_src = config.base_url[:-1] + img_src
-            rblob = GET(img_src)
+            rblob = GET(img_src.replace(' ',''))
             if rblob:
                 jpegs = ['jpg', 'jpeg']
                 try:
@@ -237,7 +237,7 @@ def parse_article(url):
             img_src = full.select_one('div.featured_image>img')['data-src']
             if img_src[0] == '/':
                 img_src = base_url[:-1] + img_src
-            b_data = GET(img_src).content
+            b_data = GET(img_src.replace(' ','')).content
             try:
                 ext = urlparse(img_src).path.split('/')[-1:][0].split('.')[-1:][0]
             except:
