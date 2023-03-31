@@ -63,6 +63,7 @@ if __name__ == '__main__':
             get_articles_links(dep)
     sql_dups_delete('links', 'link')
     links = sql_get_links()
+    config.CURRENT_LINK = 0
     if links:
         if MULTITHREADED:
             multithreaded_parse_articles(links)
