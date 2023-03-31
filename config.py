@@ -18,6 +18,8 @@ headers = c['headers']
 base_url = c['base_url']
 deps = c['deps']
 
+last_date = None
+
 
 class DB:
     db_user : str

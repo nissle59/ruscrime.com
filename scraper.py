@@ -77,9 +77,9 @@ def GET(url):
 def get_articles_links(dep_link = 'ministers/'):
     links = []
     #last_date = sql_get_last_link_date()
-    last_date = None
-    if last_date:
-        last_dt = datetime.datetime.strptime(last_date,"%Y-%m-%d")
+    #config.last_date = None
+    if config.last_date:
+        last_dt = datetime.datetime.strptime(config.last_date,"%Y-%m-%d")
     else:
         last_dt = datetime.datetime.strptime('1900-01-01', "%Y-%m-%d")
     _log = logging.getLogger('parser.getlinks')
@@ -109,10 +109,10 @@ def get_articles_links(dep_link = 'ministers/'):
                     date = article.select_one('div.jeg_meta_date').text.strip()
                     dt = datetime.datetime.strptime(date, '%d/%m/%Y')
                     date = dt.strftime('%Y-%m-%d')
-                    if last_date:
+                    if config.last_date:
                         days_diff = (dt - last_dt).days
                         if days_diff <= -1:
-                            _log.info(f'Links get ended with last_date = {last_date} and current date = {date}')
+                            _log.info(f'Links get ended with last_date = {config.last_date} and current date = {date}')
                             return True
                     link = a['href']
                     d = {}

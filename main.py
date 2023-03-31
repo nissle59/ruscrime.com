@@ -56,6 +56,7 @@ if __name__ == '__main__':
     sql_version()
     sql_dups_delete()
     if not DEV:
+        config.last_date = sql_get_last_link_date()
         for dep in config.deps:
             log.info(f'Go to {dep}')
             get_articles_links(dep)
