@@ -256,6 +256,13 @@ def parse_article(url):
             post = full.select_one('div.post_content')
         if not post:
             post = full.select_one('div.content-inner>div.entry-content')
+        if not post:
+            post = full.select_one('div.content-inner>div.article_article')
+        if not post:
+            post = full.select_one('div.content-inner>div#content-main')
+
+        if not post:
+            post = full.select_one('div.content-inner')
 
         try:
             tags = [a.text.strip() for a in full.select('div.jeg_post_tags>a')]
