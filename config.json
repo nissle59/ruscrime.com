@@ -18,17 +18,17 @@
   "MULTITHREADED": true,
   "THREADS": 20,
   "db": {
-    "user": "twpguser",
-    "pass": "785564tw",
-    "host": "127.0.0.1",
+    "user": "<>",
+    "pass": "<>",
+    "host": "",
     "port": 5432,
-    "name": "twdb"
+    "name": "db"
   },
   "ssh": {
-    "host": "pve.thron.host",
-    "port": 7222,
+    "host": "sshhost",
+    "port": 22,
     "user": "root",
-    "pass": "qAzWsX159$$$"
+    "pass": "pass"
   },
   "headers": {
     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -37,8 +37,7 @@
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 YaBrowser/23.1.5.708 Yowser/2.5 Safari/537.36"
   },
   "proxies": [
-    "SOGBee:d25Hs5A@188.191.164.19:9078",
-    "SOGMeg:rTd57fsDh@188.191.164.19:9005",
-    "SOGMTS:gF56k2S@goldproxy2.linkpc.net:1109"
+    "user:pass@host:port",
+    "..."
   ]
 }
